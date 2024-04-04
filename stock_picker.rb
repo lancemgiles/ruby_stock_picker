@@ -6,10 +6,11 @@ def stock_picker(prices)
 
 	# find the highest number
 	high = prices.max
+	included_prices = []
 	# is it the first element?
 	if high == prices[0]
-		prices.shift
-		high = prices.max
+		included_prices = prices.drop(1)
+		high = included_prices.max
 	end
 	high
 end
