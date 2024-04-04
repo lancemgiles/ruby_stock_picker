@@ -5,15 +5,21 @@ def stock_picker(prices)
 	# and the price before with the second highest price
 
 	# find the highest number
-	high = prices.max
+	sell = prices.max
 	included_prices = []
 	# is it the first element?
-	if high == prices[0]
+	if sell == prices[0]
 		included_prices = prices.drop(1)
-		high = included_prices.max
+		sell = included_prices.max
 	end
-	high
+	sell_date = prices.index(sell)
+	sell_range = included_prices.slice(0, sell_date)
+	buy = included_prices.select{|date|
+								date == sell_range.min}
+	buy_date = prices.index(buy.join.to_i)
+	# [prices.find_index(buy_date), prices.find_index(sell_date)]
+	return [buy_date, sell_date]
 end
 
 
-puts stock_picker([17,3,6,9,15,8,6,1,10])
+p stock_picker([17,3,6,9,15,8,6,1,10])
