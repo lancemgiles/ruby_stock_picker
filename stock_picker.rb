@@ -5,21 +5,34 @@ def stock_picker(prices)
 	# and the price before with the second highest price
 
 	# find the highest number
-	sell = prices.max
-	included_prices = []
+	best_selling_price = prices.max
+	included_prices = prices
 	# is it the first element?
-	if sell == prices[0]
+	if best_selling_price == prices[0]
 		included_prices = prices.drop(1)
-		sell = included_prices.max
+		best_selling_price = included_prices.max
 	end
-	sell_date = prices.index(sell)
+	sell_date = prices.rindex(best_selling_price)
+	
+
+	best_buying_price = prices.min
+	if best_buying_price == prices[-1]
+		included_prices.pop
+		best_buying_price = prices.min
+	end
 	sell_range = included_prices.slice(0, sell_date)
+	# if prices.index(best_buying_price) > sell_range[-1]
+	# 	included_prices.delete(best_buying_price)
+	# 	best_buying_price = included_prices.min
+	# end
+
+	
 	buy = included_prices.select{|date|
 								date == sell_range.min}
 	buy_date = prices.index(buy.join.to_i)
-	# [prices.find_index(buy_date), prices.find_index(sell_date)]
 	return [buy_date, sell_date]
+	
 end
 
 
-p stock_picker([17,3,6,9,15,8,6,1,10])
+p stock_picker([1,3,6,9,20,8,6,10,22])
